@@ -2,6 +2,9 @@
 
 
 #include "SpecSpace3D_PlayerController.h"
+#include "GameFramework/Character.h"
+#include "InputActionValue.h"          // ← FInputActionValue の本体
+#include "EnhancedInputComponent.h"     // ← BindAction するなら必要
 
 ASpecSpace3D_PlayerController::ASpecSpace3D_PlayerController()
 {
@@ -18,4 +21,20 @@ void ASpecSpace3D_PlayerController::SetupInputComponent() {
 	
 	Super::SetupInputComponent();
 
+}
+
+void ASpecSpace3D_PlayerController::OnMove(const FInputActionValue& Value)
+{
+    const FVector2D Axis = Value.Get<FVector2D>();
+    OnMoveAxis(Axis);
+}
+
+void ASpecSpace3D_PlayerController::OnMoveAxis(FVector2D Axis)
+{
+	if (ACharacter* ControlCharacter = Cast<ACharacter>(GetPawn())) 
+	{ 
+		//移動方向はキャラクター向きではなく絶対方向 
+		ControlCharacter->AddMovementInput(FVector::ForwardVector, Axis.Y); 
+		ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X); 
+	}
 }

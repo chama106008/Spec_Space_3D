@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "SpecSpace3D_PlayerController.generated.h"
 
+struct FInputActionValue;
+
 /**
  * 
  */
@@ -23,4 +25,9 @@ protected:
 	//“ü—ÍŠî”Õ‚ªì»‚³‚ê‚½’¼Œã‚Ìˆ—
 	virtual void SetupInputComponent() override;
 
+	//ˆÚ“®“ü—Íˆ—
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnMoveAxis(FVector2D Axis);
+
+	void OnMove(const FInputActionValue& Value);
 };
