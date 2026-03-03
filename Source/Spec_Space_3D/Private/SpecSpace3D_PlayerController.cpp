@@ -23,6 +23,9 @@ void ASpecSpace3D_PlayerController::SetupInputComponent() {
 
 }
 
+//------
+// 移動処理
+// ------
 void ASpecSpace3D_PlayerController::OnMove(const FInputActionValue& Value)
 {
     const FVector2D Axis = Value.Get<FVector2D>();
@@ -36,5 +39,24 @@ void ASpecSpace3D_PlayerController::OnMoveAxis(FVector2D Axis)
 		//移動方向はキャラクター向きではなく絶対方向 
 		ControlCharacter->AddMovementInput(FVector::ForwardVector, Axis.Y); 
 		ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X); 
+	}
+}
+
+
+//------
+// ジャンプ処理
+// ------
+void ASpecSpace3D_PlayerController::OnJump(bool Pressed)
+{
+	if (ACharacter* ControlCharacter = Cast<ACharacter>(GetPawn()))
+	{
+		if (Pressed)
+		{	
+			ControlCharacter->Jump();
+		}
+		else
+		{
+			ControlCharacter->StopJumping();
+		}
 	}
 }

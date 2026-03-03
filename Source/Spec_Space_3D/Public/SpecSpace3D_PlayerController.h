@@ -18,6 +18,8 @@ class SPEC_SPACE_3D_API ASpecSpace3D_PlayerController : public APlayerController
 
 public: ASpecSpace3D_PlayerController();
 
+
+
 protected:
 	//クラス作成時の処理
 	virtual void BeginPlay() override;
@@ -30,4 +32,8 @@ protected:
 	void OnMoveAxis(FVector2D Axis);
 
 	void OnMove(const FInputActionValue& Value);
+
+	//ジャンプ入力処理
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnJump(bool Pressed);
 };
