@@ -65,18 +65,18 @@ public:
 	
 	// 俯瞰の基本角度（見下ろし向き）
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "-89.0", ClampMax = "0.0"))
-	float BasePitch = -45.0f;
+	float BasePitch = -30.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "-180.0", ClampMax = "180.0"))
 	float BaseYaw = 45.0f;
 
 	// Pawnから見て「どれくらい離すか」（平面距離）
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
-	float Distance = 900.0f;
+	float Distance = 600.0f;
 
 	// Pawnから見て「どれくらい上げるか」
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired")
-	float Height = 450.0f;
+	float Height = 400.0f;
 
 	// 必要なら左右にもずらせる（デバッグで便利）
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired")
