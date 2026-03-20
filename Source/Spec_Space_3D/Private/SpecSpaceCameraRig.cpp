@@ -42,7 +42,7 @@ void ASpecSpaceCameraRig::Tick(float DeltaSeconds)
 
 	// 目的値を計算
 	const FVector DesiredLoc = ComputeDesiredLocation(PawnLoc);
-	const FRotator DesiredRot = ComputeDesiredRotation();
+	const FRotator DesiredRot = ComputeDesiredRotation(PawnLoc);
 
 
 	// 2) 位置：速度上限で近づく（＋任意で加速度）
@@ -133,7 +133,10 @@ FVector ASpecSpaceCameraRig::ComputeDesiredLocation(const FVector& PawnLocation)
 	FVector Desired = PawnLocation;
 
 	//各位置設定
-	Desired.X -= Distance;
+	const float Normalized = FMath::Abs(PawnLocation.Z - Height) / Height;
+	const float Clamped = FMath::Min(Normalized, 1.0f);
+	const float Factor = sqrt(Clamped * (2.0f - Clamped));   // 0→1へ滑らかに増える
+	Desired.X -= Distance * (1.0f + 0.5f * Factor);
 	Desired.Y += SideOffset;
 	Desired.Z = Height;
 
@@ -146,8 +149,13 @@ FVector ASpecSpaceCameraRig::ComputeDesiredLocation(const FVector& PawnLocation)
 }
 
 //角度計算
-FRotator ASpecSpaceCameraRig::ComputeDesiredRotation() const
+FRotator ASpecSpaceCameraRig::ComputeDesiredRotation(const FVector& PawnLocation) const
 {
 	// 今は最小：固定の俯瞰角のみ
-	return FRotator(BasePitch, BaseYaw, 0.0f);
+	FRotator Desired = FRotator(BasePitch, BaseYaw, 0.0f);
+
+	Desired.Pitch = BasePitch * (1 - PawnLocation.Z / Height) + 3.0f;
+	Desired.Pitch = FMath::Clamp(Desired.Pitch, -80.0f, 80.0f);
+
+	return Desired;
 }
