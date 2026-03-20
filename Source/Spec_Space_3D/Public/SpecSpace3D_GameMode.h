@@ -9,11 +9,45 @@
 /**
  * 
  */
+
+// ゲーム状態配列の定義
+UENUM(BlueprintType)
+enum class EGameState : uint8
+{
+    Playing     UMETA(DisplayName = "Playing"),
+    Cleared     UMETA(DisplayName = "Cleared"),
+    GameOver    UMETA(DisplayName = "GameOver"),
+    Menu        UMETA(DisplayName = "Menu")
+};
+
 UCLASS()
 class SPEC_SPACE_3D_API ASpecSpace3D_GameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
 public : ASpecSpace3D_GameMode();
+
+public :
+       // ゲーム状態　初期は常にPlaying
+       UPROPERTY(BlueprintReadOnly, Category = "State")
+       EGameState CurrentState = EGameState::Playing;
+
+//処理一覧
+protected:
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
+
+    // 入力制御用のヘルパー
+    bool SetInputUI();
+
+    bool SetInputGame();
+
+public :
+    // ゲーム内処理
+    UFUNCTION(BlueprintCallable, Category = "Game")
+    virtual void HandleStageClear();
+
+    UFUNCTION(BlueprintCallable, Category = "Game")
+    virtual void HandleGameOver();
 
 };

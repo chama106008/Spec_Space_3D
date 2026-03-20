@@ -11,6 +11,7 @@ ASpecSpaceCharacter::ASpecSpaceCharacter()
 
 }
 
+
 // Called when the game starts or when spawned
 void ASpecSpaceCharacter::BeginPlay()
 {
