@@ -2,6 +2,9 @@
 
 
 #include "Character/SpecSpaceCharacter.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 // Sets default values
 ASpecSpaceCharacter::ASpecSpaceCharacter()
@@ -31,5 +34,30 @@ void ASpecSpaceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+// “§‰ßƒ‚[ƒh(Œ©‚½–Ú‚Ì•ÏX‚Í•Û—¯)
+void ASpecSpaceCharacter::SetGhostMode(bool bEnable)
+{
+	if (UCapsuleComponent* Capsule = GetCapsuleComponent())
+	{
+		if (bEnable)
+		{
+			Capsule->SetCollisionProfileName(TEXT("GhostPawn"));
+		}
+		else
+		{
+			Capsule->SetCollisionProfileName(TEXT("NormalPawn"));
+		}
+	}
+
+	if (bEnable)
+	{
+		if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+		{
+			MoveComp->SetMovementMode(MOVE_Falling);
+		}
+	}
+	
 }
 

@@ -3,8 +3,9 @@
 
 #include "SpecSpace3D_PlayerController.h"
 #include "GameFramework/Character.h"
-#include "InputActionValue.h"          // ← FInputActionValue の本体
-#include "EnhancedInputComponent.h"     // ← BindAction するなら必要
+#include "InputActionValue.h"
+#include "EnhancedInputComponent.h"
+#include "Character/SpecSpaceCharacter.h"
 
 ASpecSpace3D_PlayerController::ASpecSpace3D_PlayerController()
 {
@@ -59,4 +60,23 @@ void ASpecSpace3D_PlayerController::OnJump(bool Pressed)
 			ControlCharacter->StopJumping();
 		}
 	}
+}
+
+// -------
+// 当たり判定消失ギミック
+// -------
+void ASpecSpace3D_PlayerController::OnGhost(bool Pressed)
+{
+	if (ASpecSpaceCharacter* ControlCharacter = Cast<ASpecSpaceCharacter>(GetPawn()))
+	{
+		if (Pressed)
+		{
+			ControlCharacter->SetGhostMode(true);
+		}
+		else
+		{
+			ControlCharacter->SetGhostMode(false);
+		}
+	}
+
 }

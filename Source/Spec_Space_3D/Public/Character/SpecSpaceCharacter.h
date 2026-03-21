@@ -26,4 +26,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// ---------
+	// 新規アクションギミック
+	// ---------
+	// 透過モード
+	UFUNCTION()
+	virtual void SetGhostMode(bool bEnable);
 };

@@ -36,4 +36,8 @@ protected:
 	//ƒWƒƒƒ“ƒv“ü—Íˆ—
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void OnJump(bool Pressed);
+
+	//
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnGhost(bool Pressed);
 };
