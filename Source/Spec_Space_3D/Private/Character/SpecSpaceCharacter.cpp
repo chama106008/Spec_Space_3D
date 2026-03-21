@@ -61,3 +61,24 @@ void ASpecSpaceCharacter::SetGhostMode(bool bEnable)
 	
 }
 
+// 軽量モード(見た目の変更は保留)
+void ASpecSpaceCharacter::SetFeatherMode(bool bEnable)
+{
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		if (bEnable)
+		{
+			MoveComp->Mass = 1.0f;
+		}
+		else
+		{
+			MoveComp->Mass = 100.0f;
+		}
+	}
+}
+
+// 滑走モード(見た目の変更は保留)
+void ASpecSpaceCharacter::SetSlipMode(bool bEnable)
+{
+
+}

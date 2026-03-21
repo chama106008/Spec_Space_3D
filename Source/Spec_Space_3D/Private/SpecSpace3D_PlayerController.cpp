@@ -80,3 +80,20 @@ void ASpecSpace3D_PlayerController::OnGhost(bool Pressed)
 	}
 
 }
+
+// -------
+// 軽量化ギミック
+// -------
+void ASpecSpace3D_PlayerController::OnFeather(bool Pressed)
+{
+
+}
+
+
+// -------
+// 滑走ギミック
+// -------
+void ASpecSpace3D_PlayerController::OnSlip(bool Pressed)
+{
+
+}

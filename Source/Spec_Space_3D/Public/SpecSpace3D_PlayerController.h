@@ -37,7 +37,15 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void OnJump(bool Pressed);
 
-	//
+	// 透過モード
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void OnGhost(bool Pressed);
+
+	// 軽量化モード
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnFeather(bool Pressed);
+
+	// 滑走モード
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnSlip(bool Pressed);
 };

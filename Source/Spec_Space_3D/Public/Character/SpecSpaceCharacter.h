@@ -32,4 +32,12 @@ public:
 	// 透過モード
 	UFUNCTION()
 	virtual void SetGhostMode(bool bEnable);
+
+	// 軽量モード
+	UFUNCTION()
+	virtual void SetFeatherMode(bool bEnable);
+
+	// 滑走モード
+	UFUNCTION()
+	virtual void SetSlipMode(bool bEnable);
 };
