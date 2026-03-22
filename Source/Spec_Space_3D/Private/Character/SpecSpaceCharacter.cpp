@@ -19,13 +19,18 @@ ASpecSpaceCharacter::ASpecSpaceCharacter()
 void ASpecSpaceCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
 void ASpecSpaceCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (IsSlip)
+	{
+		if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+			MoveComp->Velocity *= SlipRate;
+	}
 
 }
 
@@ -84,5 +89,21 @@ void ASpecSpaceCharacter::SetFeatherMode(bool bEnable)
 // ŠŠ‘–ƒ‚[ƒh(Œ©‚½–Ú‚Ì•ÏX‚Í•Û—¯)
 void ASpecSpaceCharacter::SetSlipMode(bool bEnable)
 {
-
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		if (bEnable)
+		{
+			MoveComp->GroundFriction = 0.0f;
+			MoveComp->FallingLateralFriction = 0.0f;
+			MoveComp->MaxAcceleration = 512.0f;
+			IsSlip = true;
+		}
+		else
+		{
+			MoveComp->GroundFriction = 8.0f;
+			MoveComp->FallingLateralFriction = 0.5f;
+			MoveComp->MaxAcceleration = 2048.0f;
+			IsSlip = false;
+		}
+	}
 }

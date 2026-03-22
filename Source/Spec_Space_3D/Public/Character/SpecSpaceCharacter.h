@@ -40,4 +40,9 @@ public:
 	// ääëñÉÇÅ[Éh
 	UFUNCTION()
 	virtual void SetSlipMode(bool bEnable);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
+	bool IsSlip = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
+	float SlipRate = 1.02f;
 };

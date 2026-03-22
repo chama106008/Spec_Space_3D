@@ -103,5 +103,13 @@ void ASpecSpace3D_PlayerController::OnFeather(bool Pressed)
 // -------
 void ASpecSpace3D_PlayerController::OnSlip(bool Pressed)
 {
-
+	if (ASpecSpaceCharacter* ControlCharacter = Cast<ASpecSpaceCharacter>(GetPawn()))
+		if (Pressed)
+		{
+			ControlCharacter->SetSlipMode(true);
+		}
+		else
+		{
+			ControlCharacter->SetSlipMode(false);
+		}
 }

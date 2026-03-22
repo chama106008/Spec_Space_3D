@@ -96,7 +96,7 @@ public:
 
 	// 位置：最大速度（cm/s）
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Motion", meta = (ClampMin = "0.0"))
-	float MaxSpeed = 2500.0f;
+	float MaxSpeed = 5000.0f;
 
 	// 位置：最大加速度（cm/s^2）。加速度を使わないなら0でOK
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Motion", meta = (ClampMin = "0.0"))
