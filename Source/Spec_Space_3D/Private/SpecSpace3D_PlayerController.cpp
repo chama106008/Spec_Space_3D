@@ -86,7 +86,15 @@ void ASpecSpace3D_PlayerController::OnGhost(bool Pressed)
 // -------
 void ASpecSpace3D_PlayerController::OnFeather(bool Pressed)
 {
-
+	if (ASpecSpaceCharacter* ControlCharacter = Cast<ASpecSpaceCharacter>(GetPawn()))
+		if (Pressed)
+		{
+			ControlCharacter->SetFeatherMode(true);
+		}
+		else
+		{
+			ControlCharacter->SetFeatherMode(false);
+		}
 }
 
 

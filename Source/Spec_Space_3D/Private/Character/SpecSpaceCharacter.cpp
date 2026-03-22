@@ -68,11 +68,15 @@ void ASpecSpaceCharacter::SetFeatherMode(bool bEnable)
 	{
 		if (bEnable)
 		{
-			MoveComp->Mass = 1.0f;
+			MoveComp->Mass = 0.1f;
+			MoveComp->GravityScale = 0.001f;
+			MoveComp->JumpZVelocity = 6000.0f;
 		}
 		else
 		{
 			MoveComp->Mass = 100.0f;
+			MoveComp->GravityScale = 1.3f;
+			MoveComp->JumpZVelocity = 600.0f;
 		}
 	}
 }
