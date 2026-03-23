@@ -12,7 +12,8 @@ ASpecSpace3D_PlayerController::ASpecSpace3D_PlayerController()
 
 }
 
-void ASpecSpace3D_PlayerController::BeginPlay() {
+void ASpecSpace3D_PlayerController::BeginPlay() 
+{
 	
 	Super::BeginPlay();
 

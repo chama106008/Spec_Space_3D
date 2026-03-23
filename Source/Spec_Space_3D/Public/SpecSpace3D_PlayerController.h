@@ -21,11 +21,22 @@ public: ASpecSpace3D_PlayerController();
 
 
 protected:
-	//クラス作成時の処理
+	// クラス作成時の処理
 	virtual void BeginPlay() override;
 
-	//入力基盤が作製された直後の処理
+	// 入力基盤が作製された直後の処理
 	virtual void SetupInputComponent() override;
+
+public:
+	// UI処理
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+	void RequestGameOver();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+	void RequestStageClear();
+
+	
+protected:
 
 	//移動入力処理
 	UFUNCTION(BlueprintCallable, Category = "Input")

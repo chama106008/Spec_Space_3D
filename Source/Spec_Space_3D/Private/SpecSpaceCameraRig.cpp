@@ -33,6 +33,8 @@ void ASpecSpaceCameraRig::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	if (bFreezeCamera) return;
+
 	if (!EnsureTargetPawn())
 	{
 		return;
@@ -99,6 +101,10 @@ void ASpecSpaceCameraRig::Tick(float DeltaSeconds)
 	SetActorRotation(NewRot);
 }
 
+void ASpecSpaceCameraRig::SetCameraFreeze(bool bFreeze)
+{
+	bFreezeCamera = bFreeze;
+}
 
 //í«ê’ëŒè€ÇéÊìæ
 void ASpecSpaceCameraRig::SetTargetPawn(APawn* NewPawn)

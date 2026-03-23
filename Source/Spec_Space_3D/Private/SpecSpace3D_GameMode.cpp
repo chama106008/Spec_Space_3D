@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
+#include "SpecSpace3D_PlayerController.h"
 
 ASpecSpace3D_GameMode::ASpecSpace3D_GameMode()
 {
@@ -79,6 +80,15 @@ void ASpecSpace3D_GameMode::HandleStageClear()
     CurrentState = EGameState::Cleared;
     SetInputUI();
 
+    //controllerからUI処理を呼び出し
+    APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
+    ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
+    if (PC)
+    {
+        PC->RequestStageClear();
+    }
+
+
 }
 
 //ゲームオーバー処理
@@ -91,5 +101,13 @@ void ASpecSpace3D_GameMode::HandleGameOver()
 
     CurrentState = EGameState::GameOver;
     SetInputUI();
+
+    //controllerからUI処理を呼び出し
+    APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
+    ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
+    if (PC)
+    {
+        PC->RequestGameOver();
+    }
 
 }

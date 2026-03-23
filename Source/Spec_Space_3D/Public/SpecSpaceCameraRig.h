@@ -33,6 +33,10 @@ public:
 	// 毎フレーム更新（追尾＆角度調整）
 	virtual void Tick(float DeltaSeconds) override;
 
+	// 停止フラグ管理
+	UFUNCTION(BlueprintCallable, Category = "SpecSpace|CameraRig")
+	void SetCameraFreeze(bool bFreeze);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -109,6 +113,9 @@ public:
 private:
 	// 加速度方式のときに使う現在速度
 	FVector CurrentVelocity = FVector::ZeroVector;
+
+	//カメラ停止フラグ
+	bool bFreezeCamera = false;
 
 private:
 	bool EnsureTargetPawn();

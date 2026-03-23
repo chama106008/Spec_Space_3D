@@ -1,0 +1,9 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Menu_GameMode.h"
+
+AMenu_GameMode::AMenu_GameMode()
+{
+
+}
