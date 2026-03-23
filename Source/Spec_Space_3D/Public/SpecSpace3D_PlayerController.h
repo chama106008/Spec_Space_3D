@@ -35,6 +35,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
 	void RequestStageClear();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTimer(int32 RemainingTime);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartCountDown();
+
 	
 protected:
 

@@ -9,7 +9,7 @@
 
 ASpecSpace3D_GameMode::ASpecSpace3D_GameMode()
 {
-
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 // -------------
@@ -57,6 +57,20 @@ bool ASpecSpace3D_GameMode::SetInputGame()
 
 }
 
+void ASpecSpace3D_GameMode::CountdownTick()
+{
+    CountdownTime--;
+
+    if (CountdownTime <= 0)
+    {
+        GetWorld()->GetTimerManager().ClearTimer(CountdownTimerHandle);
+
+        CurrentState = EGameState::Playing;
+        SetInputGame();
+        
+    }
+}
+
 
 
 // -------------
@@ -64,9 +78,78 @@ bool ASpecSpace3D_GameMode::SetInputGame()
 // -------------
 
 void ASpecSpace3D_GameMode::BeginPlay()
+{   
+    Super::BeginPlay();
+
+    CurrentState = EGameState::CountDown;
+    SetInputUI();
+    TimeLimit = 30.0f; //更新予定
+    RemainingTime = TimeLimit;
+    ElapsedTime = 0.0f;
+    //Start CountDown -> アニメーション開始
+    
+
+	//CurrentState = EGameState::Playing;
+    // SetInputGame();
+
+    CountdownTime = 3;
+
+    //カウントダウンアニメーション再生
+    GetWorld()->GetTimerManager().SetTimer(
+        CountdownAnimDelayHandle,
+        [this]()
+        {
+            APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
+            ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
+            if (PC)
+            {
+                PC->StartCountDown();
+            }
+
+            GetWorld()->GetTimerManager().SetTimer(
+                CountdownTimerHandle,
+                this,
+                &ASpecSpace3D_GameMode::CountdownTick,
+                1.0f,
+                true
+            );
+        },
+        0.5f,
+        false
+    );
+
+}
+
+void ASpecSpace3D_GameMode::Tick(float DeltaSeconds)
 {
-	CurrentState = EGameState::Playing;
-    SetInputGame();
+    Super::Tick(DeltaSeconds);
+
+    //プレイ中の時間処理
+    if (CurrentState == EGameState::Playing)
+    {
+        ElapsedTime += DeltaSeconds;
+        RemainingTime -= DeltaSeconds;
+        
+        const int32 DisplayTime = FMath::CeilToInt(RemainingTime);
+
+        if (DisplayTime != LastSentTime)
+        {
+            LastSentTime = DisplayTime;
+            APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
+            ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
+            if (PC)
+            {
+                PC->UpdateTimer(LastSentTime);
+            }
+            
+        }
+
+        if (RemainingTime <= 0.0f)
+        {
+            RemainingTime = 0.0f;
+            HandleGameOver();
+        }
+    }
 }
 
 //クリア時処理

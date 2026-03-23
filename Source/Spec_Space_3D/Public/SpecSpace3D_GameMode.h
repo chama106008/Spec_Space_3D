@@ -17,7 +17,8 @@ enum class EGameState : uint8
     Playing     UMETA(DisplayName = "Playing"),
     Cleared     UMETA(DisplayName = "Cleared"),
     GameOver    UMETA(DisplayName = "GameOver"),
-    Menu        UMETA(DisplayName = "Menu")
+    Menu        UMETA(DisplayName = "Menu"),
+    CountDown   UMETA(DisplayName = "CountDown")
 };
 
 UCLASS()
@@ -31,16 +32,26 @@ public :
        // ゲーム状態　初期は常にPlaying
        UPROPERTY(BlueprintReadOnly, Category = "State")
        EGameState CurrentState = EGameState::Playing;
+       
 
 //処理一覧
-protected:
+protected :
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
+
+    virtual void Tick(float DeltaSeconds) override;
 
     // 入力制御用のヘルパー
     bool SetInputUI();
 
     bool SetInputGame();
+
+    FTimerHandle CountdownTimerHandle;
+    int CountdownTime = 3;
+
+    void CountdownTick();
+
+    FTimerHandle CountdownAnimDelayHandle;
 
 public :
     // ゲーム内処理
@@ -49,5 +60,17 @@ public :
 
     UFUNCTION(BlueprintCallable, Category = "Game")
     virtual void HandleGameOver();
+
+public:
+    
+    // ステージの制限時間、初期30sec
+    UPROPERTY(BlueprintReadWrite, Category = "Game")
+    float TimeLimit = 30.0f;
+
+    float RemainingTime;
+    float ElapsedTime;
+    float ClearTime;
+    int32 LastSentTime;
+
 
 };
