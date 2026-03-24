@@ -65,4 +65,13 @@ protected:
 	// 滑走モード
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void OnSlip(bool Pressed);
+
+	// ポーズ処理関連
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void TogglePause();
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void PauseGame();
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void ResumeGame();
+	bool IsPaused = false;
 };

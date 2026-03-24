@@ -18,7 +18,8 @@ enum class EGameState : uint8
     Cleared     UMETA(DisplayName = "Cleared"),
     GameOver    UMETA(DisplayName = "GameOver"),
     Menu        UMETA(DisplayName = "Menu"),
-    CountDown   UMETA(DisplayName = "CountDown")
+    CountDown   UMETA(DisplayName = "CountDown"),
+    Paused      UMETA(DisplayName = "Paused")
 };
 
 UCLASS()
@@ -41,17 +42,19 @@ protected :
 
     virtual void Tick(float DeltaSeconds) override;
 
-    // 入力制御用のヘルパー
-    bool SetInputUI();
-
-    bool SetInputGame();
-
     FTimerHandle CountdownTimerHandle;
     int CountdownTime = 3;
 
     void CountdownTick();
 
     FTimerHandle CountdownAnimDelayHandle;
+
+
+public :
+    // 入力制御用のヘルパー
+    bool SetInputUI();
+
+    bool SetInputGame();
 
 public :
     // ゲーム内処理

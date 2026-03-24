@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
 #include "SpecSpace3D_PlayerController.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ASpecSpace3D_GameMode::ASpecSpace3D_GameMode()
 {
@@ -152,18 +154,18 @@ void ASpecSpace3D_GameMode::Tick(float DeltaSeconds)
     }
 }
 
-//クリア時処理
+// クリア時処理
 void ASpecSpace3D_GameMode::HandleStageClear()
 {   
     if (CurrentState != EGameState::Playing)
     {
         return;
     }
-    
+
     CurrentState = EGameState::Cleared;
     SetInputUI();
 
-    //controllerからUI処理を呼び出し
+    // controllerからUI処理を呼び出し
     APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
     ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
     if (PC)
@@ -174,7 +176,7 @@ void ASpecSpace3D_GameMode::HandleStageClear()
 
 }
 
-//ゲームオーバー処理
+// ゲームオーバー処理
 void ASpecSpace3D_GameMode::HandleGameOver()
 {   
     if (CurrentState != EGameState::Playing)

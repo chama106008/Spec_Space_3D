@@ -33,7 +33,10 @@ void ASpecSpaceCameraRig::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (bFreezeCamera) return;
+	if (bFreezeCamera)
+	{
+		return;
+	}
 
 	if (!EnsureTargetPawn())
 	{

@@ -6,6 +6,8 @@
 #include "InputActionValue.h"
 #include "EnhancedInputComponent.h"
 #include "Character/SpecSpaceCharacter.h"
+#include "SpecSpace3D_GameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 ASpecSpace3D_PlayerController::ASpecSpace3D_PlayerController()
 {
@@ -113,4 +115,52 @@ void ASpecSpace3D_PlayerController::OnSlip(bool Pressed)
 		{
 			ControlCharacter->SetSlipMode(false);
 		}
+}
+
+// -------
+// É|Å[ÉYèàóù
+// -------
+void ASpecSpace3D_PlayerController::TogglePause()
+{	
+	ASpecSpace3D_GameMode* GM = Cast<ASpecSpace3D_GameMode>(UGameplayStatics::GetGameMode(this));
+	if (GM)
+	{
+		if (GM->CurrentState == EGameState::CountDown)
+			return;
+	}
+
+	if (!IsPaused)
+	{
+		PauseGame();
+	}
+	else
+	{
+		ResumeGame();
+	}
+}
+
+void ASpecSpace3D_PlayerController::PauseGame()
+{
+	IsPaused = true;
+	ASpecSpace3D_GameMode* GM = Cast<ASpecSpace3D_GameMode>(UGameplayStatics::GetGameMode(this));
+	if (GM)
+	{
+		GM->CurrentState = EGameState::Paused;
+	}
+	else return;
+
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+void ASpecSpace3D_PlayerController::ResumeGame()
+{
+	IsPaused = false;
+	ASpecSpace3D_GameMode* GM = Cast<ASpecSpace3D_GameMode>(UGameplayStatics::GetGameMode(this));
+	if (GM)
+	{
+		GM->CurrentState = EGameState::Playing;
+	}
+	else return;
+
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
