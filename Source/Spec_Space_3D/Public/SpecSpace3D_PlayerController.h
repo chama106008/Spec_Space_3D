@@ -33,7 +33,7 @@ public:
 	void RequestGameOver();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
-	void RequestStageClear();
+	void RequestStageClear(float ClearTime, bool bNewRecord);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdateTimer(int32 RemainingTime);

@@ -72,7 +72,6 @@ public:
 
     float RemainingTime;
     float ElapsedTime;
-    float ClearTime;
     int32 LastSentTime;
 
 

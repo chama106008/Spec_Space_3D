@@ -7,6 +7,7 @@
 #include "GameFramework/Pawn.h"
 #include "SpecSpace3D_PlayerController.h"
 #include "GameFramework/Character.h"
+#include "SpecSpace3D_GameInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ASpecSpace3D_GameMode::ASpecSpace3D_GameMode()
@@ -165,12 +166,42 @@ void ASpecSpace3D_GameMode::HandleStageClear()
     CurrentState = EGameState::Cleared;
     SetInputUI();
 
+    // 丸め
+    float ClearTime = FMath::RoundToFloat(ElapsedTime * 100.0f) / 100.0f;
+
+    // 以降そのまま使う
+
+    // ゲームインスタンスから現在レベルの比較用データを取得
+    auto* GI = GetGameInstance<USpecSpace3D_GameInstance>();
+    if (!GI) return;
+    FName LevelName = *GetWorld()->GetName();
+    bool bNewRecord = false;
+    // StageDataを更新
+    for (FStageData& Stage : GI->AllStages)
+    {
+        if (Stage.LevelName == LevelName)
+        {
+            bNewRecord = (!Stage.bCleared || ClearTime < Stage.BestTime);
+
+            Stage.bCleared = true;
+
+            if (bNewRecord)
+            {
+                Stage.BestTime = ClearTime;
+            }
+
+            break;
+        }
+    }
+    GI->BuildSaveDataFromStages();
+    GI->SaveCurrentData();
+
     // controllerからUI処理を呼び出し
     APlayerController* BasePC = UGameplayStatics::GetPlayerController(this, 0);
     ASpecSpace3D_PlayerController* PC = Cast<ASpecSpace3D_PlayerController>(BasePC);
     if (PC)
     {
-        PC->RequestStageClear();
+        PC->RequestStageClear(ClearTime, bNewRecord);
     }
 
 

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "StageData.generated.h"
+#include "StageSaveData.generated.h"
 
 USTRUCT(BlueprintType)
-struct FStageData
+struct FStageSaveData
 {
-    GENERATED_BODY()
+	GENERATED_BODY()
 
 public:
     // ワールド番号
@@ -17,27 +17,16 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 StageIndex = 0;
 
-    // ステージ名
+    // クリア状況
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FText StageTitle;
-
-    // 呼び出しレベル名
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FName LevelName;
-
-    // 時間制限
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float TimeLimit = 30.0f;
-
-    // ベストタイム
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float BestTime = 999.0f;
+    bool bCleared = false;
 
     // 解放状況
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool bUnlocked = true;
 
-    //クリア状況
+    // ベストタイム
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bCleared = false;
+    float BestTime = 999.0f;
+
 };
