@@ -144,15 +144,15 @@ FVector ASpecSpaceCameraRig::ComputeDesiredLocation(const FVector& PawnLocation)
 	//各位置設定
 	const float Normalized = FMath::Abs(PawnLocation.Z - Height) / Height;
 	const float Clamped = FMath::Min(Normalized, 1.0f);
-	const float Factor = sqrt(Clamped * (2.0f - Clamped));   // 0→1へ滑らかに増える
-	Desired.X -= Distance * (1.0f + 0.5f * Factor);
+	const float Factor = sqrt(Clamped * (1.0f - Clamped));   // 0→1へ滑らかに増える
+	Desired.X -= Distance * (1.5f - 0.5f * Factor);
 	Desired.Y += SideOffset;
-	Desired.Z = Height;
+	Desired.Z = Height + PawnLocation.Z/2;
 
 	// ワールド範囲にクランプ（暴走防止）
 	Desired.X = FMath::Clamp(Desired.X, WorldMin.X, WorldMax.X);
 	Desired.Y = FMath::Clamp(Desired.Y, WorldMin.Y, WorldMax.Y);
-	Desired.Z = FMath::Clamp(Desired.Z, WorldMin.Z, WorldMax.Z);
+	Desired.Z = FMath::Clamp(Desired.Z, 0, 2*Height);
 
 	return Desired;
 }
@@ -163,7 +163,7 @@ FRotator ASpecSpaceCameraRig::ComputeDesiredRotation(const FVector& PawnLocation
 	// 今は最小：固定の俯瞰角のみ
 	FRotator Desired = FRotator(BasePitch, BaseYaw, 0.0f);
 
-	Desired.Pitch = BasePitch * (1 - PawnLocation.Z / Height) + 3.0f;
+	Desired.Pitch = BasePitch * (1 - PawnLocation.Z / Height / 2) + 3.0f;
 	Desired.Pitch = FMath::Clamp(Desired.Pitch, -80.0f, 80.0f);
 
 	return Desired;
