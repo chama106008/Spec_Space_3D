@@ -48,6 +48,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
 	
 	FVector2D MoveInputAxis = FVector2D::ZeroVector;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsMoveInput = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsGameOver = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsGameClear = false;
 };

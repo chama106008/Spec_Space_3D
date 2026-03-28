@@ -8,6 +8,7 @@
 #include "SpecSpace3D_PlayerController.h"
 #include "GameFramework/Character.h"
 #include "SpecSpace3D_GameInstance.h"
+#include "Sound/SoundBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ASpecSpace3D_GameMode::ASpecSpace3D_GameMode()
@@ -70,6 +71,10 @@ void ASpecSpace3D_GameMode::CountdownTick()
 
         CurrentState = EGameState::Playing;
         SetInputGame();
+        if (StageBGM)
+        {
+            UGameplayStatics::PlaySound2D(GetWorld(), StageBGM);
+        }
         
     }
 }
@@ -85,19 +90,33 @@ void ASpecSpace3D_GameMode::BeginPlay()
     Super::BeginPlay();
 
     CurrentState = EGameState::CountDown;
+    
+    // ゲームインスタンスから現在レベルの比較用データを取得
+    auto* GI = GetGameInstance<USpecSpace3D_GameInstance>();
+    if (!GI) return;
+    FName LevelName = *GetWorld()->GetName();
+    bool bNewRecord = false;
+    // StageDataを更新
+    for (FStageData& Stage : GI->AllStages)
+    {
+        if (Stage.LevelName == LevelName)
+        {
+            TimeLimit = Stage.TimeLimit;
+        }
+    }
+
     SetInputUI();
-    TimeLimit = 30.0f; //更新予定
     RemainingTime = TimeLimit;
     ElapsedTime = 0.0f;
-    //Start CountDown -> アニメーション開始
     
-
-	//CurrentState = EGameState::Playing;
-    // SetInputGame();
 
     CountdownTime = 3;
 
     //カウントダウンアニメーション再生
+    if (CountDownBGM)
+    {
+        UGameplayStatics::PlaySound2D(GetWorld(), CountDownBGM);
+    }
     GetWorld()->GetTimerManager().SetTimer(
         CountdownAnimDelayHandle,
         [this]()

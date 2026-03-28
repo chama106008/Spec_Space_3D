@@ -49,6 +49,12 @@ protected :
 
     FTimerHandle CountdownAnimDelayHandle;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* StageBGM = nullptr;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* CountDownBGM = nullptr;
+
 
 public :
     // “ü—Í§Œä—p‚Ìƒwƒ‹ƒp[
