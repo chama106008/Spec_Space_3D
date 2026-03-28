@@ -38,11 +38,15 @@ void ASpecSpace3D_PlayerController::OnMove(const FInputActionValue& Value)
 
 void ASpecSpace3D_PlayerController::OnMoveAxis(FVector2D Axis)
 {
-	if (ACharacter* ControlCharacter = Cast<ACharacter>(GetPawn())) 
+	if (ASpecSpaceCharacter* ControlCharacter = Cast<ASpecSpaceCharacter>(GetPawn())) 
 	{ 
 		//移動方向はキャラクター向きではなく絶対方向 
 		ControlCharacter->AddMovementInput(FVector::ForwardVector, Axis.Y); 
-		ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X); 
+		ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X);
+		
+		// アニメーション用の入力判定
+		// 入力値そのものだけ保存
+		ControlCharacter->MoveInputAxis = Axis;
 	}
 }
 

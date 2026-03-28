@@ -31,7 +31,10 @@ void ASpecSpaceCharacter::Tick(float DeltaTime)
 		if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
 			MoveComp->Velocity *= SlipRate;
 	}
+	IsMoveInput = (MoveInputAxis.Size() > 0.1f);
 
+	// 次フレーム用にリセット
+	MoveInputAxis = FVector2D::ZeroVector;
 }
 
 // Called to bind functionality to input

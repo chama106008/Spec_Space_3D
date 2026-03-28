@@ -45,4 +45,9 @@ public:
 	bool IsSlip = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
 	float SlipRate = 1.02f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "SpecSpace|CameraRig|Desired", meta = (ClampMin = "0.0"))
+	
+	FVector2D MoveInputAxis = FVector2D::ZeroVector;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool IsMoveInput = false;
 };
