@@ -41,6 +41,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StartCountDown();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsCameraRig = false;
+
 	
 protected:
 
@@ -74,4 +77,5 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void ResumeGame();
 	bool IsPaused = false;
+
 };

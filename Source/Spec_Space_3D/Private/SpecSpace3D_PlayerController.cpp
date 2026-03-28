@@ -39,10 +39,25 @@ void ASpecSpace3D_PlayerController::OnMove(const FInputActionValue& Value)
 void ASpecSpace3D_PlayerController::OnMoveAxis(FVector2D Axis)
 {
 	if (ASpecSpaceCharacter* ControlCharacter = Cast<ASpecSpaceCharacter>(GetPawn())) 
-	{ 
-		//移動方向はキャラクター向きではなく絶対方向 
-		ControlCharacter->AddMovementInput(FVector::ForwardVector, Axis.Y); 
-		ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X);
+	{	
+		if (IsCameraRig)
+		{
+			//移動方向はキャラクター向きではなく絶対方向 
+			ControlCharacter->AddMovementInput(FVector::ForwardVector, Axis.Y); 
+			ControlCharacter->AddMovementInput(FVector::RightVector, Axis.X);
+		}
+		else
+		{
+			const FRotator ControlRot = GetControlRotation();
+			const FRotator YawRot(0.f, ControlRot.Yaw, 0.f);
+
+			const FVector ForwardDir = FRotationMatrix(YawRot).GetUnitAxis(EAxis::X);
+			const FVector RightDir = FRotationMatrix(YawRot).GetUnitAxis(EAxis::Y);
+
+			ControlCharacter->AddMovementInput(ForwardDir, Axis.Y);
+			ControlCharacter->AddMovementInput(RightDir, Axis.X);
+		}
+		
 		
 		// アニメーション用の入力判定
 		// 入力値そのものだけ保存
