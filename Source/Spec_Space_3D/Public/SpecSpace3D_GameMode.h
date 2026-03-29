@@ -62,6 +62,8 @@ public :
 
     bool SetInputGame();
 
+    bool SetInputBoth();
+
 public :
     // ƒQ[ƒ€“àˆ—
     UFUNCTION(BlueprintCallable, Category = "Game")

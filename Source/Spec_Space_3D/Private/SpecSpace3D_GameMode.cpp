@@ -61,6 +61,25 @@ bool ASpecSpace3D_GameMode::SetInputGame()
 
 }
 
+bool ASpecSpace3D_GameMode::SetInputBoth()
+{
+    APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+    if (!PC)
+    {
+        return false;
+    }
+
+    FInputModeGameAndUI InputMode;
+    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    InputMode.SetHideCursorDuringCapture(false);
+
+    PC->SetInputMode(InputMode);
+    PC->bShowMouseCursor = true;
+
+    return true;
+
+}
+
 void ASpecSpace3D_GameMode::CountdownTick()
 {
     CountdownTime--;

@@ -165,6 +165,7 @@ void ASpecSpace3D_PlayerController::PauseGame()
 	if (GM)
 	{
 		GM->CurrentState = EGameState::Paused;
+		GM->SetInputBoth();
 	}
 	else return;
 
@@ -178,6 +179,7 @@ void ASpecSpace3D_PlayerController::ResumeGame()
 	if (GM)
 	{
 		GM->CurrentState = EGameState::Playing;
+		GM->SetInputGame();
 	}
 	else return;
 

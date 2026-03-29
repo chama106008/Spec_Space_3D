@@ -152,7 +152,7 @@ FVector ASpecSpaceCameraRig::ComputeDesiredLocation(const FVector& PawnLocation)
 	// ワールド範囲にクランプ（暴走防止）
 	Desired.X = FMath::Clamp(Desired.X, WorldMin.X, WorldMax.X);
 	Desired.Y = FMath::Clamp(Desired.Y, WorldMin.Y, WorldMax.Y);
-	Desired.Z = FMath::Clamp(Desired.Z, 0, 2*Height);
+	Desired.Z = FMath::Clamp(Desired.Z, -0.5*Height, 2.5*Height);
 
 	return Desired;
 }

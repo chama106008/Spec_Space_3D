@@ -10,16 +10,6 @@ void USpecSpace3D_GameInstance::Init()
 {
     Super::Init();
 
-    UE_LOG(LogTemp, Warning, TEXT("AllStages Num = %d"), AllStages.Num());
-
-    for (const FStageData& Stage : AllStages)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Stage: W=%d S=%d Name=%s"),
-            Stage.WorldIndex,
-            Stage.StageIndex,
-            *Stage.LevelName.ToString());
-    }
-
     InitializeSaveData();
     SyncSaveDataFromStages();
 }
@@ -74,7 +64,8 @@ void USpecSpace3D_GameInstance::SyncSaveDataFromStages()
                 SaveData.StageIndex == Stage.StageIndex)
             {
                 // Save Å® Stage Ç…îΩâf
-                Stage.bUnlocked = SaveData.bUnlocked;
+                // âï˙èÛãµÇÕàÍí[ï ä«óù
+                // Stage.bUnlocked = SaveData.bUnlocked;
                 Stage.bCleared = SaveData.bCleared;
                 Stage.BestTime = SaveData.BestTime;
 
